@@ -1,5 +1,5 @@
 {
-  "name": "inin-ciclgpack",
+  "name": "PierrickL-ciclgpack",
   "version": "0.1.0",
   "author": "Pierrick Lozach",
   "summary": "Installs a CIC language pack",
@@ -12,4 +12,3 @@
     {"name":"puppetlabs-powershell", "version_requirement":">=1.0.4"}
   ]
 }
-
