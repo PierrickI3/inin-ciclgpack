@@ -37,11 +37,13 @@ Your language pack msi files should be available in a shared folder, available o
 
 ## Usage
 
+```puppet
 class { 'ciclgpack':
   ensure      => installed,
   locale      => [ 'fr_FR', 'en_UK', 'nl_NL' ],
   cic_version => '2015_R2',
 }
+```
 
 ## Limitations
 
