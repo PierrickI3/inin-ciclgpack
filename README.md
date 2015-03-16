@@ -3,77 +3,47 @@
 #### Table of Contents
 
 1. [Overview](#overview)
-2. [Module Description - What the module does and why it is useful](#module-description)
+2. [Module Description](#module-description)
 3. [Setup - The basics of getting started with ciclgpack](#setup)
     * [What ciclgpack affects](#what-ciclgpack-affects)
     * [Setup requirements](#setup-requirements)
     * [Beginning with ciclgpack](#beginning-with-ciclgpack)
 4. [Usage - Configuration options and additional functionality](#usage)
-5. [Reference - An under-the-hood peek at what the module is doing and how](#reference)
 5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
 
 ## Overview
 
-A one-maybe-two sentence summary of what the module does/what problem it solves.
-This is your 30 second elevator pitch for your module. Consider including
-OS/Puppet version it works with.
+Installs a CIC language pack silently and sets other settings accordingly
 
 ## Module Description
 
-If applicable, this section should have a brief description of the technology
-the module integrates with and what that integration enables. This section
-should answer the questions: "What does this module *do*?" and "Why would I use
-it?"
-
-If your module has a range of functionality (installation, configuration,
-management, etc.) this is the time to mention it.
+Simplifies the installation of a new language on a CIC 201xRx. Updates the media server analysis language model and the Windows culture settings accordingly.
 
 ## Setup
 
 ### What ciclgpack affects
 
-* A list of files, packages, services, or operations that the module will alter,
-  impact, or execute on the system it's installed on.
-* This is a great place to stick any warnings.
-* Can be in list or paragraph form.
+* Installs the Language pack for the required language
+* Changes the Windows culture settings to the requested language
+* Updates the Media Server analysis language model via a server parameter
 
-### Setup Requirements **OPTIONAL**
+### Setup Requirements
 
-If your module requires anything extra before setting up (pluginsync enabled,
-etc.), mention it here.
+A fully working and licensed CIC server 201xRx (i.e. 2015R1)
 
 ### Beginning with ciclgpack
 
-The very basic steps needed for a user to get the module up and running.
-
-If your most recent release breaks compatibility or requires particular steps
-for upgrading, you may wish to include an additional section here: Upgrading
-(For an example, see http://forge.puppetlabs.com/puppetlabs/firewall).
+Your language pack msi files should be available in a shared folder, available on the guest in the C:\daas-cache folder. This will soon change when mounting ISOs will be supported.
 
 ## Usage
 
-Put the classes, types, and resources for customizing, configuring, and doing
-the fancy stuff with your module here.
-
-## Reference
-
-Here, list the classes, types, providers, facts, etc contained in your module.
-This section should include all of the under-the-hood workings of your module so
-people know what the module is touching on their system but don't need to mess
-with things. (We are working on automating this section!)
+class { 'ciclgpack':
+  ensure      => installed,
+  locale      => [ 'fr_FR', 'en_UK', 'nl_NL' ],
+  cic_version => '2015_R2',
+}
 
 ## Limitations
 
-This is where you list OS compatibility, version compatibility, etc.
-
-## Development
-
-Since your module is awesome, other users will want to play with it. Let them
-know what the ground rules for contributing are.
-
-## Release Notes/Contributors/Etc **Optional**
-
-If you aren't using changelog, put your release notes here (though you should
-consider using changelog). You may also add any additional sections you feel are
-necessary or important to include here. Please use the `## ` header.
+* Windows 2012R2
+* CIC 2015R1 or later
