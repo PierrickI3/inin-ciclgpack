@@ -1,41 +1,67 @@
 # == Class: ciclgpack
 #
-# Full description of class ciclgpack here.
+# Installs a CIC language pack
 #
 # === Parameters
 #
-# Document parameters here.
+# [locales]
+#   List of locales (country and language) of the language packs to install
+#   e.g. "fr_FR" for French (France) or "en_UK" for English (United Kingdom)
+#   Supported locales are here: https://my.inin.com/products/cic/Pages/Localization.aspx
 #
-# [*sample_parameter*]
-#   Explanation of what this parameter affects and what it defaults to.
-#   e.g. "Specify one or more upstream ntp servers as an array."
-#
-# === Variables
-#
-# Here you should define a list of variables that this module would require.
-#
-# [*sample_variable*]
-#   Explanation of how this variable affects the funtion of this class and if
-#   it has a default. e.g. "The parameter enc_ntp_servers must be set by the
-#   External Node Classifier as a comma separated list of hostnames." (Note,
-#   global variables should be avoided in favor of class parameters as
-#   of Puppet 2.6.)
+# [cic_version]
+#   Current version of CIC (i.e. "2015_R2")
 #
 # === Examples
 #
 #  class { 'ciclgpack':
-#    servers => [ 'pool.ntp.org', 'ntp.local.company.com' ],
+#    ensure      => installed,
+#    locale      => [ 'fr_FR', 'en_UK', 'nl_NL' ],
+#    cic_version => '2015_R2',
 #  }
 #
 # === Authors
 #
-# Author Name <author@domain.com>
+# Pierrick Lozach <pierrick.lozach@inin.com>
 #
 # === Copyright
 #
-# Copyright 2015 Your name here, unless otherwise noted.
+# Copyright 2015 Interactive Intelligence, Inc.
 #
-class ciclgpack {
+class ciclgpack (
+  $locales,
+)
+{
+  $daascache = 'C:\\daas-cache'
 
+  if ($operatingsystem != 'Windows')
+  {
+    err('This module works on Windows only!')
+    fail('Unsupported OS')
+  }
 
+case $ensure
+  {
+  	installed:
+  	{
+  	  each ($locales) |$locale|
+  	  {
+        debug("Installing Language Pack for ${locale}")
+        $languagepackmsi = "LanguagePack_${locale}_${cic_version}.msi"
+        exec {"language-pack-install-${locale}":
+          command => "msiexec /i ${languagepackmsi} STARTEDBYEXEORIUPDATE=1 REBOOT=ReallySuppress /l*v ${languagepackmsi}.log /qn /norestart",
+        }
+
+        debug("Creating/updating media server analysis language model server parameter")
+
+        debug("Setting Windows Culture to ${locale}")
+        exec {"set-windows-culture-${locale}":
+          command  => "Set-Culture ${locale}",
+          provider => powershell,
+          timeout  => 30,
+          require  => Exec["language-pack-install-${locale}"]
+        }
+  	  }
+  	}
+  }
 }
