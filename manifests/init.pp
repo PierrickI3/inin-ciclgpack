@@ -50,14 +50,19 @@ case $ensure
   	  {
         debug("Installing Language Pack for ${locale}")
         $languagepackmsi = "LanguagePack_${locale}_${cic_version}.msi"
+        exec {"language-pack-install-${locale}":
+          command => "msiexec /i ${daascache}\\${languagepackmsi} STARTEDBYEXEORIUPDATE=1 REBOOT=ReallySuppress /l*v ${languagepackmsi}.log /qn /norestart",
+          path    => $::path,
+          cwd     => $::system32,
+        }
+
         package {"language-pack-install-${locale}":
           ensure          => installed,
           source          => "${daascache}\\${languagepackmsi}",
-          install_options => [ '/qn', 
-                               '/norestart', 
+          install_options => [
                               {'STARTEDBYEXEORIUPDATE' => '1'},
                               {'REBOOT' => 'ReallySuppress'},
-                              {'/l*v' => "${languagepackmsi}.log"},],
+                             ],
         }
 
         debug("Creating/updating media server analysis language model server parameter")
@@ -69,7 +74,7 @@ case $ensure
           path     => $::path,
           cwd      => $::system32,
           timeout  => 30,
-          require  => Exec["language-pack-install-${locale}"],
+          require  => Package["language-pack-install-${locale}"],
         }
   	  }
   	}
