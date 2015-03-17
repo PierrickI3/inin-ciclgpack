@@ -16,7 +16,7 @@
 #
 #  class { 'ciclgpack':
 #    ensure      => installed,
-#    locale      => [ 'fr_FR', 'en_UK', 'nl_NL' ],
+#    locales     => [ 'fr_FR', 'en_UK', 'nl_NL' ],
 #    cic_version => '2015_R2',
 #  }
 #
@@ -29,7 +29,9 @@
 # Copyright 2015 Interactive Intelligence, Inc.
 #
 class ciclgpack (
+  $ensure,
   $locales,
+  $cic_version,
 )
 {
   $daascache = 'C:\\daas-cache'
@@ -49,7 +51,9 @@ case $ensure
         debug("Installing Language Pack for ${locale}")
         $languagepackmsi = "LanguagePack_${locale}_${cic_version}.msi"
         exec {"language-pack-install-${locale}":
-          command => "msiexec /i ${languagepackmsi} STARTEDBYEXEORIUPDATE=1 REBOOT=ReallySuppress /l*v ${languagepackmsi}.log /qn /norestart",
+          command => "msiexec /i ${daascache}\\${languagepackmsi} STARTEDBYEXEORIUPDATE=1 REBOOT=ReallySuppress /l*v ${languagepackmsi}.log /qn /norestart",
+          path    => $::path,
+          cwd     => $::system32,
         }
 
         debug("Creating/updating media server analysis language model server parameter")
@@ -58,8 +62,10 @@ case $ensure
         exec {"set-windows-culture-${locale}":
           command  => "Set-Culture ${locale}",
           provider => powershell,
+          path     => $::path,
+          cwd      => $::system32,
           timeout  => 30,
-          require  => Exec["language-pack-install-${locale}"]
+          require  => Exec["language-pack-install-${locale}"],
         }
   	  }
   	}
