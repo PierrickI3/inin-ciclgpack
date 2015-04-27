@@ -3,3 +3,4 @@
 2015-03-17: Using package instead of calling msiexec manually
 2015-04-27: using imdisk to mount CIC's iso
 2015-04-27: only installing one language pack. Will look at installing multiple later on.
+2015-04-27: fixing windows locale
