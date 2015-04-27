@@ -1,5 +1,5 @@
 class {'ciclgpack':
   ensure      => installed,
-  locales     => ['fr-FR'],
+  locale      => 'fr-FR',
   cic_version => '2015_R2',
 }
