@@ -40,7 +40,7 @@ The CIC iso file should be available in a shared folder, available on the guest 
 ```puppet
 class { 'ciclgpack':
   ensure      => installed,
-  locale      => 'fr-FR',
+  locale      => 'fr',
   cic_version => '2015_R2',
 }
 ```
@@ -57,8 +57,8 @@ en-GB: English (United Kingdom)
 en-NZ: English (New Zealand)
 es: Spanish (Latin America)
 es-es: Spanish (Spain)
-fr-ca: French (Canada)
 fr: French
+fr-ca: French (Canada)
 he: Hebrew
 it: Italian
 ja: Japanese
