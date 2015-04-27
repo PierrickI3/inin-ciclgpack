@@ -23,29 +23,32 @@ Simplifies the installation of a new language on a CIC 201xRx. Updates the media
 
 ### What ciclgpack affects
 
-* Installs the Language pack for the required language
+* Installs a CIC Language pack
 * Changes the Windows culture settings to the requested language
-* Updates the Media Server analysis language model via a server parameter
+* Adds a file on the desktop to help configuring media server and import dial plans
 
 ### Setup Requirements
 
-A fully working and licensed CIC server 201xRx (i.e. 2015R1)
+A fully working and licensed CIC server 201xRx (i.e. 2015R2)
 
 ### Beginning with ciclgpack
 
-Your language pack msi files should be available in a shared folder, available on the guest in the C:\daas-cache folder. This will soon change when mounting ISOs will be supported.
+The CIC iso file should be available in a shared folder, available on the guest in the C:\daas-cache folder.
 
 ## Usage
 
 ```puppet
 class { 'ciclgpack':
   ensure      => installed,
-  locales     => [ 'fr', 'en_UK', 'nl_NL' ],
+  locale      => 'fr-FR',
   cic_version => '2015_R2',
 }
 ```
 
+## Supported Languages
+Check the Localization(https://my.inin.com/products/cic/Pages/Localization.aspx) page for supported languages for your CIC version
+
 ## Limitations
 
 * Windows 2012R2
-* CIC 2015R1 or later
+* CIC 2015R2 or later

@@ -1,6 +1,6 @@
 {
   "name": "PierrickL-ciclgpack",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "author": "Pierrick Lozach",
   "summary": "Installs a CIC language pack",
   "license": "Apache 2.0",
@@ -8,7 +8,12 @@
   "project_page": "https://github.com/PierrickI3/inin-ciclgpack",
   "issues_url": "https://github.com/PierrickI3/inin-ciclgpack/issues",
   "dependencies": [
-    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"},
-    {"name":"puppetlabs-powershell", "version_requirement":">=1.0.4"}
+    {"name":"puppetlabs/stdlib","version_requirement":">= 4.6.0"},
+    {"name":"puppetlabs/powershell", "version_requirement":">=1.0.4"}
+  ],
+  "operatingsystem_support":[
+    {
+      "operatingsystem":"Windows"
+    }
   ]
 }
