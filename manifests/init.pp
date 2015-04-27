@@ -74,10 +74,12 @@ class ciclgpack (
     'zh-hans':
     {
       $currentlanguagepackmsi = "${languagepackmsi}_zh_Hans_${cic_version}.msi"
+      $windowslocale = 'zh-CN'
     }
     'zh-hant':
     {
       $currentlanguagepackmsi = "${languagepackmsi}_zh_Hant_${cic_version}.msi"
+      $windowslocale = 'zh-TW'
     }
     default:
     {
@@ -85,7 +87,10 @@ class ciclgpack (
     }
   }
 
-  debug("Installing Language Pack for ${locale}. MSI: ${currentlanguagepackmsi}")
+  # Windows expects ll-cc (l: language, c: country)
+  $windowslocale = regsubst($locale, '_', '-', 'G')
+
+  debug("Installing Language Pack for ${locale}. MSI: ${currentlanguagepackmsi}. Windows Locale: ${windowslocale}.")
 
   case $ensure
   {
@@ -105,20 +110,20 @@ class ciclgpack (
       package {'language-pack-install':
         ensure          => installed,
         source          => "${mountdriveletter}\\Installs\\LanguagePacks\\${currentlanguagepackmsi}",
-        install_options => [ {'STARTEDBYEXEORIUPDATE' => '1'}, {'REBOOT' => 'ReallySuppress'}, ],
+        install_options => [{'STARTEDBYEXEORIUPDATE' => '1'}, {'REBOOT' => 'ReallySuppress'},],
         require         => Exec['mount-cic-iso'],
       }
 
       debug('Adding instructions on desktop')
       file {'C:/Users/Vagrant/Desktop/MediaServer Language Analysis Instructions.txt':
         ensure  => present,
-        content => 'To configure Media Server speech for your language, create or update the "Call Analysis Language" server parameter to one of the values listed on page 67 of the following document: https://my.inin.com/products/cic/Documentation/mergedProjects/wh_tr/bin/media_server_tr.pdf\n\rYou can also download dial plans from https://my.inin.com/products/cic/Pages/Localization.aspx under the "Localized Dial Plans" section at the bottom of the page',
+        content => 'To configure Media Server speech for your language, create or update the "Call Analysis Language" server parameter to one of the values listed on page 67 of the following document: https://my.inin.com/products/cic/Documentation/mergedProjects/wh_tr/bin/media_server_tr.pdf\nYou can also download dial plans from https://my.inin.com/products/cic/Pages/Localization.aspx under the "Localized Dial Plans" section at the bottom of the page',
         require => Package['language-pack-install'],
       }
 
-      debug("Setting Windows Culture to ${locale}")
+      debug("Setting Windows Culture to ${windowslocale}")
       exec {'set-windows-culture':
-        command  => "Set-Culture ${locale}",
+        command  => "Set-Culture ${windowslocale}",
         provider => powershell,
         path     => $::path,
         cwd      => $::system32,
