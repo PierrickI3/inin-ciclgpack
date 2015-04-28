@@ -49,30 +49,30 @@ class { 'ciclgpack':
 Check the Localization(https://my.inin.com/products/cic/Pages/Localization.aspx) page for supported languages for your CIC version
 
 At the time of writing this module, the following locale are supported:
-ar: Arabic
-da: Danish
-de: German
-en-AU: English (Australia)
-en-GB: English (United Kingdom)
-en-NZ: English (New Zealand)
-es: Spanish (Latin America)
-es-es: Spanish (Spain)
-fr: French
-fr-ca: French (Canada)
-he: Hebrew
-it: Italian
-ja: Japanese
-ko: Korean
-nl: Dutch
-no: Norwegian
-pl: Polish
-pt-BR: Portuguese (Brazil)
-ru: Russian
-sr: Serbian (Latin)
-sv: Swedish
-tr: Turkish
-zh_Hans: Chinese (Simplified)
-zh_Hant: Chinese (Taiwan)
+* ar: Arabic
+* da: Danish
+* de: German
+* en-AU: English (Australia)
+* en-GB: English (United Kingdom)
+* en-NZ: English (New Zealand)
+* es: Spanish (Latin America)
+* es-es: Spanish (Spain)
+* fr: French
+* fr-ca: French (Canada)
+* he: Hebrew
+* it: Italian
+* ja: Japanese
+* ko: Korean
+* nl: Dutch
+* no: Norwegian
+* pl: Polish
+* pt-BR: Portuguese (Brazil)
+* ru: Russian
+* sr: Serbian (Latin)
+* sv: Swedish
+* tr: Turkish
+* zh_Hans: Chinese (Simplified)
+* zh_Hant: Chinese (Taiwan)
 
 ## Limitations
 

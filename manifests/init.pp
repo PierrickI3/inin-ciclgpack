@@ -84,11 +84,76 @@ class ciclgpack (
     default:
     {
       $currentlanguagepackmsi = "${languagepackmsi}_${locale}_${cic_version}.msi"
+      case downcase($locale)
+      {
+        'ar':
+        {
+          $windowslocale = 'ar-AE'
+        }
+        'de':
+        {
+          $windowslocale = 'de-DE'
+        }
+        'fr':
+        {
+          $windowslocale = 'fr-FR'
+        }
+        'he':
+        {
+          $windowslocale = 'he-IL'
+        }
+        'it':
+        {
+          $windowslocale = 'it-IT'
+        }
+        'ja':
+        {
+          $windowslocale = 'ja-JP'
+        }
+        'ko':
+        {
+          $windowslocale = 'ko-KR'
+        }
+        'nl':
+        {
+          $windowslocale = 'nl-NL'
+        }
+        'no':
+        {
+          $windowslocale = 'nn-NO'
+        }
+        'pl':
+        {
+          $windowslocale = 'pl-PL'
+        }
+        'ru':
+        {
+          $windowslocale = 'ru-RU'
+        }
+        'sr':
+        {
+          $windowslocale = 'Lt-sr-SP'
+        }
+        'sv':
+        {
+          $windowslocale = 'sv-SE'
+        }
+        'tr':
+        {
+          $windowslocale = 'tr-TR'
+        }
+        default:
+        {
+          fail("Unknown locale ${locale}")
+        }
+      }
     }
   }
 
-  # Windows expects ll-cc (l: language, c: country)
-  $windowslocale = regsubst($locale, '_', '-', 'G')
+  if ($locale.match('_')) {
+    # Windows expects ll-cc (l: language, c: country)
+    $windowslocale = regsubst($locale, '_', '-', 'G')
+  }
 
   debug("Installing Language Pack for ${locale}. MSI: ${currentlanguagepackmsi}. Windows Locale: ${windowslocale}.")
 
@@ -117,7 +182,8 @@ class ciclgpack (
       debug('Adding instructions on desktop')
       file {'C:/Users/Vagrant/Desktop/MediaServer Language Analysis Instructions.txt':
         ensure  => present,
-        content => 'To configure Media Server speech for your language, create or update the "Call Analysis Language" server parameter to one of the values listed on page 67 of the following document: https://my.inin.com/products/cic/Documentation/mergedProjects/wh_tr/bin/media_server_tr.pdf\nYou can also download dial plans from https://my.inin.com/products/cic/Pages/Localization.aspx under the "Localized Dial Plans" section at the bottom of the page',
+        content => "To configure Media Server speech for your language, create or update the 'Call Analysis Language' server parameter to one of the values listed on page 67 of the following document: https://my.inin.com/products/cic/Documentation/mergedProjects/wh_tr/bin/media_server_tr.pdf
+                    You can also download dial plans from https://my.inin.com/products/cic/Pages/Localization.aspx under the 'Localized Dial Plans' section at the bottom of the page",
         require => Package['language-pack-install'],
       }
 
