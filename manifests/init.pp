@@ -150,7 +150,7 @@ class ciclgpack (
     }
   }
 
-  if ($locale.match('_')) {
+  if '_' in $locale {
     # Windows expects ll-cc (l: language, c: country)
     $windowslocale = regsubst($locale, '_', '-', 'G')
   }
