@@ -1,4 +1,5 @@
 require 'rake'
+require 'puppet-lint/tasks/puppet-lint'
 require 'rspec/core/rake_task'
 require 'rubygems'
 require 'puppetlabs_spec_helper/rake_tasks'
