@@ -1,7 +1,6 @@
 fixtures:
   repositories:
-    stdlib:
-      repo: 'git://github.com/puppetlabs/puppetlabs-stdlib.git'
-      ref: '4.1.0'
+    stdlib: 'git://github.com/puppetlabs/puppetlabs-stdlib'
+    powershell: 'git://github.com/puppetlabs/puppetlabs-powershell'
   symlinks:
     ciclgpack: "#{source_dir}"

@@ -14,3 +14,6 @@ tmtags
 *.swp
 tags
 pkg
+
+## RSPEC_PUPPET
+spec/fixtures
