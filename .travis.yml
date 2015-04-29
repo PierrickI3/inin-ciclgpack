@@ -1,0 +1,6 @@
+rvm: 1.8.7
+notifications:
+  email:
+    - pierrick.lozach@inin.com
+  env:
+    - PUPPET_VERSION=3.7.3
