@@ -28,6 +28,8 @@
 #
 # Copyright 2015 Interactive Intelligence, Inc.
 #
+include stdlib
+
 class ciclgpack (
   $ensure,
   $locale,
