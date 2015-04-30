@@ -163,6 +163,7 @@ class ciclgpack (
   {
     installed:
     {
+
       # Mount CIC ISO
       debug('Mounting CIC ISO')
       exec {'mount-cic-iso':
