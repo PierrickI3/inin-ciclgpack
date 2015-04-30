@@ -4,3 +4,4 @@ notifications:
     - pierrick.lozach@inin.com
   env:
     - PUPPET_VERSION=3.7.3
+script: bundle exec spec
