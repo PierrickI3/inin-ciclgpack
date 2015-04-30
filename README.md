@@ -1,5 +1,7 @@
 # ciclgpack
 
+[![Build Status](https://travis-ci.org/PierrickI3/inin-ciclgpack.svg?branch=master)](https://travis-ci.org/PierrickI3/inin-ciclgpack)
+
 #### Table of Contents
 
 1. [Overview](#overview)
