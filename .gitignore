@@ -16,4 +16,4 @@ tags
 pkg
 
 ## RSPEC
-spec/fixtures
+spec/fixtures/
