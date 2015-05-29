@@ -36,7 +36,6 @@ class ciclgpack (
   $cic_version,
 )
 {
-  $mountdriveletter = 'e:'
   $daascache        = 'C:\\daas-cache'
   $ciciso           = "CIC_${cic_version}.iso"
   $languagepackmsi  = 'LanguagePack'
@@ -166,17 +165,17 @@ class ciclgpack (
       # Mount CIC ISO
       debug('Mounting CIC ISO')
       exec {'mount-cic-iso':
-        command => "cmd.exe /c imdisk -a -f \"${daascache}\\${ciciso}\" -m ${mountdriveletter}",
+        command => "cmd.exe /c imdisk -a -f \"${daascache}\\${ciciso}\" -m n:",
         path    => $::path,
         cwd     => $::system32,
-        creates => "${mountdriveletter}/Installs/Install.exe",
+        creates => 'n:/Installs/Install.exe', # parameter does not allow variables
         timeout => 30,
       }
 
       debug("Installing Language Pack for ${locale}")
       package {'language-pack-install':
         ensure          => installed,
-        source          => "${mountdriveletter}\\Installs\\LanguagePacks\\${currentlanguagepackmsi}",
+        source          => "n:\\Installs\\LanguagePacks\\${currentlanguagepackmsi}",
         install_options => [{'STARTEDBYEXEORIUPDATE' => '1'}, {'REBOOT' => 'ReallySuppress'},],
         require         => Exec['mount-cic-iso'],
       }
@@ -202,7 +201,7 @@ class ciclgpack (
       # Unmount CIC ISO
       debug('Unmounting CIC ISO')
       exec {'unmount-cic-iso':
-        command => "cmd.exe /c imdisk -D -m ${mountdriveletter}",
+        command => 'cmd.exe /c imdisk -D -m n:',
         path    => $::path,
         cwd     => $::system32,
         timeout => 30,
