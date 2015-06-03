@@ -40,6 +40,15 @@ class ciclgpack (
   $ciciso           = "CIC_${cic_version}.iso"
   $languagepackmsi  = 'LanguagePack'
 
+ $cache_dir = hiera('core::cache_dir', 'c:/users/vagrant/appdata/local/temp') # If I use c:/windows/temp then a circular dependency occurs when used with SQL
+  if (!defined(File[$cache_dir]))
+  {
+    file {$cache_dir:
+      ensure   => directory,
+      provider => windows,
+    }
+  }
+  
   if ($::operatingsystem != 'Windows')
   {
     err('This module works on Windows only!')
