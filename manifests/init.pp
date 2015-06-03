@@ -211,7 +211,7 @@ class ciclgpack (
       }
 
       debug('Fixing Notifier registry value if needed...')
-      exec {'notifier-fix':
+      exec {'notifier-fix-lgpack':
         command => "${cache_dir}\\FixNotifierRegistryValue_lgpack.ps1",
         provider => powershell,
         timeout  => 3600,
