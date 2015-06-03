@@ -8,3 +8,4 @@
 2015-05-29: change CIC version to 2015 R3
 2015-05-29: applying R3 patch 2
 2015-06-03: Added registry fix for the Notifier issue
+2015-06-03: Fixed exec items that conflicted with PierrickL-cicserver

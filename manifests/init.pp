@@ -174,7 +174,7 @@ class ciclgpack (
 
       # Mount CIC ISO
       debug('Mounting CIC ISO')
-      exec {'mount-cic-iso':
+      exec {'mount-cic-iso-lgpack':
         command => "cmd.exe /c imdisk -a -f \"${daascache}\\${ciciso}\" -m n:",
         path    => $::path,
         cwd     => $::system32,
@@ -238,7 +238,7 @@ class ciclgpack (
 
       # Unmount CIC ISO
       debug('Unmounting CIC ISO')
-      exec {'unmount-cic-iso':
+      exec {'unmount-cic-iso-lgpack':
         command => 'cmd.exe /c imdisk -D -m n:',
         path    => $::path,
         cwd     => $::system32,
