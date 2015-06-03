@@ -187,7 +187,7 @@ class ciclgpack (
         ensure          => installed,
         source          => "n:\\Installs\\LanguagePacks\\${currentlanguagepackmsi}",
         install_options => [{'STARTEDBYEXEORIUPDATE' => '1'}, {'REBOOT' => 'ReallySuppress'},],
-        require         => Exec['mount-cic-iso'],
+        require         => Exec['mount-cic-iso-lgpack'],
       }
 
       # Notifier Registry Fix
@@ -207,7 +207,7 @@ class ciclgpack (
               Set-ItemProperty -Path \$NotifierRegPath -Name \$NotifierKey -Value \$env:COMPUTERNAME
           }
         ",
-        before  => Exec['notifier-fix'],
+        before  => Exec['notifier-fix-lgpack'],
       }
 
       debug('Fixing Notifier registry value if needed...')
@@ -244,7 +244,7 @@ class ciclgpack (
         cwd     => $::system32,
         timeout => 30,
         require => [
-                    Exec['mount-cic-iso'],
+                    Exec['mount-cic-iso-lgpack'],
                     Exec['set-windows-culture'],
                   ],
       }
