@@ -187,6 +187,7 @@ class ciclgpack (
         ensure          => installed,
         source          => "n:\\Installs\\LanguagePacks\\${currentlanguagepackmsi}",
         install_options => [{'STARTEDBYEXEORIUPDATE' => '1'}, {'REBOOT' => 'ReallySuppress'},],
+        provider        => 'windows',
         require         => Exec['mount-cic-iso-lgpack'],
       }
 
