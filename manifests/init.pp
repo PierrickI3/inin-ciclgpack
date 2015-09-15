@@ -9,15 +9,11 @@
 #   e.g. "fr" for French (France) or "en-UK" for English (United Kingdom) or zh-Hant for Chinese (Taiwan)
 #   Supported locales are here: https://my.inin.com/products/cic/Pages/Localization.aspx and in the readme.MD file
 #
-# [cic_version]
-#   Current version of CIC (i.e. "2015_R2")
-#
 # === Examples
 #
 #  class { 'ciclgpack':
 #    ensure      => installed,
 #    locale      => 'fr',
-#    cic_version => '2015_R2',
 #  }
 #
 # === Authors
@@ -33,14 +29,14 @@ include stdlib
 class ciclgpack (
   $ensure,
   $locale,
-  $cic_version,
 )
 {
+  $cic_version      = "${::cic_installed_major_version}_R${::cic_installed_release}"
   $daascache        = 'C:\\daas-cache'
   $ciciso           = "CIC_${cic_version}.iso"
   $languagepackmsi  = 'LanguagePack'
 
- $cache_dir = hiera('core::cache_dir', 'c:/users/vagrant/appdata/local/temp') # If I use c:/windows/temp then a circular dependency occurs when used with SQL
+  $cache_dir = hiera('core::cache_dir', 'c:/users/vagrant/appdata/local/temp') # If I use c:/windows/temp then a circular dependency occurs when used with SQL
   if (!defined(File[$cache_dir]))
   {
     file {$cache_dir:

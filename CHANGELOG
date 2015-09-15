@@ -10,3 +10,4 @@
 2015-06-03: Added registry fix for the Notifier issue
 2015-06-03: Fixed exec items that conflicted with PierrickL-cicserver
 2015-06-05: Forcing windows provider for package
+2015-09-15: Transforming into version-independent
