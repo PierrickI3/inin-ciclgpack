@@ -29,12 +29,14 @@ include stdlib
 class ciclgpack (
   $ensure,
   $locale,
+  $transformtemplate = 'ciclgpack/NoLicenseCheck.mst.erb',
 )
 {
   $cic_version      = "${::cic_installed_major_version}_R${::cic_installed_release}"
   $daascache        = 'C:\\daas-cache'
   $ciciso           = "CIC_${cic_version}.iso"
   $languagepackmsi  = 'LanguagePack'
+  $tranformfile     = 'c:\\tranforms.mst'
 
   $cache_dir = hiera('core::cache_dir', 'c:/users/vagrant/appdata/local/temp') # If I use c:/windows/temp then a circular dependency occurs when used with SQL
   if (!defined(File[$cache_dir]))
@@ -44,7 +46,7 @@ class ciclgpack (
       provider => windows,
     }
   }
-  
+
   if ($::operatingsystem != 'Windows')
   {
     err('This module works on Windows only!')
@@ -178,13 +180,26 @@ class ciclgpack (
         timeout => 30,
       }
 
+      file {'transform':
+        ensure  => present,
+        path    => $tranformfile,
+        content => template($transformtemplate),
+      }
+
       debug("Installing Language Pack for ${locale}")
       package {'language-pack-install':
         ensure          => installed,
         source          => "n:\\Installs\\LanguagePacks\\${currentlanguagepackmsi}",
-        install_options => [{'STARTEDBYEXEORIUPDATE' => '1'}, {'REBOOT' => 'ReallySuppress'},],
+        install_options => [
+          {'STARTEDBYEXEORIUPDATE' => '1'},
+          {'REBOOT' => 'ReallySuppress'},
+          {'TRANSFORMS' => $tranformfile}
+        ],
         provider        => 'windows',
-        require         => Exec['mount-cic-iso-lgpack'],
+        require         => [
+          Exec['mount-cic-iso-lgpack'],
+          File['transform'],
+        ],
       }
 
       # Notifier Registry Fix
